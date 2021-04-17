@@ -1,1 +1,1 @@
-# Noob-Alarm
+© Copyrights Montocdo323 & DO NOT REUP

@@ -22,7 +22,7 @@ text_6 = font.render('Reset', True, BLACK)
 
 total_secs = 0
 total = 0
-is_star = False
+is_start = False
 secs = 0
 mins = 0
 running = True
@@ -62,7 +62,8 @@ while running:
 	pygame.draw.circle(screen, WHITE, (250,400), 95)
 	pygame.draw.circle(screen, BLACK, (250,400), 5)
 
-	pygame.draw.line(screen, BLACK, (250,400),(250,310))
+	pygame.draw.line(screen, BLACK, (250,400),(250 + int(r_sec*math.sin((secs/180*6
+	pygame.draw.line(screen, RED, (250,400), (250 + int(r_min*math.sin((mins/180)*6
 	
 	for event in pygame.event.get():
 		if  event.type == pygame.QUIT:
@@ -70,11 +71,61 @@ while running:
 		if  event.type == pygame.MOUSEBUTTONDOWN:
 			if event.button == 1:
 				pygame.mixer.pause()
-				if:
-					
-			
+				if (100 < mouse_x < 150) and (50 < mouse_y < 100):
+					total_secs += 60
+					total = total_secs
+					print("press + minutes")
+				if (100 < mouse_x < 150) and (200 < mouse_y < 250):
+					total_secs -= 60
+					total = total_secs
+					print("press - minutes")
+				if (200 < mouse_x < 250) and (50 < mouse_y < 100):
+					total_secs += 1 
+					total = total_secs
+					print("press + second")
+				if (200 < mouse_x < 400) and (200 < mouse_y < 250):
+					total_secs -= 1
+					total = total_secs
+					print("press - second")
+				if (300 < mouse_x < 400) and (50 < mouse_y < 100):
+					is_start = True
+					total = total_secs
+					print("total_secs: " + str(total_secs))
+					print("press Start")
+				if (300 < mouse_x < 400) and (150 < mouse_y < 200):
+					total_secs = 0
+					is_start = False
+					print("press Reset")
 
+		if is_start:
+			total_secs -= 1
+			if total_secs == 0:
+				print("Time's up")
+				pygame.mixer.Sound.play(sound)
+			time.sleep(0.03)
+
+		if total_secs < 0:
+			is_start = False
+			total_secs = 0
+			total = 0
+
+		secs = total_secs % 60
+		mins = (total_secs - secs)/60
+		mins = int(mins)
+		time_str = str(mins) + " : " + str(secs)
+
+		text_min = font.render(time_str, True, BLACK)
+		screen.blit(text_min,((120,120))
+			
+		
+		if total != 0:
+			pygame.draw.rect(screen,RED,(60,530, 380 * int(total_secs/total)),30))
+					
 	pygame.display.flip()
 
-pygame.quit
-# To be continued
+pygame.quit()
+
+except Exception as bug:
+	print(bug)
+
+input()
